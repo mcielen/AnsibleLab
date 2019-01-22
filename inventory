@@ -1,0 +1,46 @@
+localhost ansible_connection=local
+
+
+[all:vars]
+# Azure account settings
+subscription_id= # FILL IN
+client_id= #FILL IN
+tenant= #FILL IN
+secret= #FILL IN
+
+# Other Azure settings
+rhel7_version="7.3.2017032021"
+location="westeurope"
+#vm_size="Standard_F2s_v2"
+vm_size="Standard_F16s_v2"
+rhel_sku="7.3"
+
+# resource group, network and storage will be created by the playbooks
+# Storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only
+# following settings match with the settings hardcoded in the create_vms script
+resource_group_name="ansibleworkshop" #DO NOT CHANGE THIS
+virtual_network_name="ansibleworkshop-vnet" #DO NOT CHANGE THIS
+storage_account_name="ansibleworkshopdiag965" #DO NOT CHANGE THIS
+storage_account_tower_name="ansibleworkshop02" #DO NOT CHANGE THIS
+storage_account_vm_name="ansibleworkshop" #DO NOT CHANGE THIS
+subnet_name="ansiblehandson"
+
+# User that Ansible uses to configure the tower VMs. SSH to the towers will be possible with ssh keys only.
+admin_user= #FILL IN
+
+# Tower settings
+# Some characters, like $ should be escaped.
+admin_password= #FILL IN
+nr_of_participants= #FILL IN
+participant_password= #FILL IN
+
+slack_channel= #FILL IN
+slack_token= #FILL IN. You need the token that starts with xoxb
+
+azure_create_vms_git="https://github.com/mcielen/azure_create_vms"
+
+[azure_vms]
+# azure VMs are created by the playbook and dynamically added to the inventory. Just need to configure the key
+
+[azure_vms:vars]
+ansible_ssh_private_key_file="id_rsa"

@@ -1,0 +1,25 @@
+1/ libselinux-python needs to be installed locally, to be able to change the tower_license file
+yum -y install libselinux-python
+
+2/ create a file called "tower_license.json" containing the Tower license in this folder.
+Make sure your license can manage enough nodes. Each participants uses 2 nodes (localhost and an external IP)
+
+3/ Copy inventory.example to inventory and fill in the missing parameters
+
+Some parameters can be found from Azure CLI as follows:
+# from Shell in Azure
+# PS Azure:\> az ad sp create-for-rbac --query '{"client_id": appId, "secret": password, "tenant": tenant}'
+# {
+#   "client_id": "***",
+#   "secret": "***",
+#   "tenant": "***"
+# }
+
+
+4/ Run "ansible-playbook setup_ansible_hands_on_lab.yml
+   to save time when tower is already installed: 
+   ansible-playbook tower_setup_azure.yml --skip-tags=initial_azure_setup,install_tower
+
+5/ The playbook will create (if it does not exist yet) an id_rsa file. Use this file to connect to the Tower VMs (as admin_user)
+
+6/ The playbook creates a ansible_dryrun.sh script. This can be used for monitoring load on the tower VMs, testing Azure quota's, etc. Tear down the setup and redeploy after using this script. 
